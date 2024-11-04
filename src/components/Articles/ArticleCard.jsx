@@ -21,7 +21,7 @@ function ArticleCard(props) {
           component="img"
           height="200"
           image={article_img_url}
-          alt="Nicola Sturgeon on a TED talk stage"
+          alt=""
         />
       )}
 
