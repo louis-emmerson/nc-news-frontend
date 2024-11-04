@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 
 function MobileMenu() {
@@ -15,7 +17,9 @@ function MobileMenu() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        <p>Mobile Menu</p>
+        <Typography variant='h4'>Mobile Menu</Typography>
+        <Link to="/">Home</Link>
+        <Link to="/articles">Articles</Link>
       </List>
       
     </Box>
