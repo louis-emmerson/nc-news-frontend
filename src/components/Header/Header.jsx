@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import MobileMenu from "../MobileMenu"
+import MobileMenu from "./MobileMenu"
 import  "./Header.css"
 
 function Header(){
