@@ -1,42 +1,42 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardActions from '@mui/material/CardActions';
-import ThumbUpIcon from '@mui/icons-material/ThumbUpOutlined';
+import Card from "@mui/material/Card"
+import CardContent from "@mui/material/CardContent"
+import CardMedia from "@mui/material/CardMedia"
+import Typography from "@mui/material/Typography"
+import CardActionArea from "@mui/material/CardActionArea"
+import CardActions from "@mui/material/CardActions"
+import ThumbUpIcon from "@mui/icons-material/ThumbUpOutlined"
+import { Skeleton } from "@mui/material"
 
-
-function ArticleCard() {
+function ArticleCard(props) {
+  const { article, isLoading } = props
+  const { title, author, body, article_img_url } = article
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 375, minHeight:300}}>
       <CardActionArea>
+        
+      {isLoading ? (
+        <Skeleton sx={{ height: 200 }} animation="wave" variant="rectangular" />
+      ) : (
         <CardMedia
           component="img"
           height="200"
-          image="/"
-          alt=""
+          image={article_img_url}
+          alt="Nicola Sturgeon on a TED talk stage"
         />
+      )}
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Article Title
+            {isLoading ? <Skeleton /> : title}
           </Typography>
-          <Typography variant='caption'>
-            Author Name
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, nisi autem harum iste suscipit tempore modi officiis consequuntur at similique! Labore tempore debitis sunt dolores nisi distinctio cumque minima soluta?
-          </Typography>
-          
+          <Typography variant="caption">{isLoading ? <Skeleton /> : author}</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ThumbUpIcon/>
+        {isLoading ? null : <ThumbUpIcon /> }
       </CardActions>
     </Card>
-  );
+  )
 }
-
 
 export default ArticleCard

@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material"
-import ArticleCard from "../Articles/ArticleCard"
 
 function HomepagePage(){
     return <>
