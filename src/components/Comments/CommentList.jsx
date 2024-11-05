@@ -7,42 +7,15 @@ import LinearProgress from "@mui/material/LinearProgress"
 import CommentAdder from "./CommentAdder"
 
 function CommentList(props) {
-  const { articleID } = props
-  const [comments, setComments] = useState([])
-  const [isError, setIsError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const {comments} = props
 
-  useEffect(() => {
-    setIsLoading(true)
-    setIsError(false)
-    getCommentsByArticleID(articleID)
-      .then((comments) => {
-        setIsLoading(false)
-        setComments(comments)
-      })
-      .catch(() => {
-        setIsLoading(false)
-        setIsError(true)
-      })
-  }, [])
-  if (isLoading) return <LinearProgress />
-
-  if (isError)
-    return (
-      <Error
-        errorMsg={"There has been an error fetching comments for this article"}
-      />
-    )
 
   return (
-    <>
-    <CommentAdder/>
     <List sx={{ width: "100%", maxWidth: 800, bgcolor: "background.paper" }}>
-      {comments.map((comment) => {
-        return <CommentCard key={comment.comemnt_id} comment={comment} />
+      {comments.map((comment,index) => {
+        return <CommentCard key={index} comment={comment} />
       })}
     </List>
-    </>
   )
 }
 

@@ -28,9 +28,14 @@ function patchUpdateArticleVotes(article_id, likesToAdd) {
   return api.patch(`/api/articles/${article_id}`, data).then()
 }
 
+function postNewArticleComment(article_id,commentData){
+  return api.post(`/api/articles/${article_id}/comments`, commentData).then()
+}
+
 export {
   getArticles,
   getArticleByID,
   getCommentsByArticleID,
   patchUpdateArticleVotes,
+  postNewArticleComment
 }
