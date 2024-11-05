@@ -11,10 +11,8 @@ import AvatarIcon from "@mui/icons-material/AccountCircle"
 import ThumbUpIcon from "@mui/icons-material/ThumbUpOutlined"
 import ThumbDownIcon from "@mui/icons-material/ThumbDownOutlined"
 
-
 function CommentCard(props) {
   const { comment } = props
-  console.log(comment)
   return (
     <>
       <ListItem alignItems="flex-start">
@@ -32,7 +30,7 @@ function CommentCard(props) {
         />
       </ListItem>
       <ListItem>
-        {comment.votes >= 0 ? <ThumbUpIcon/>:<ThumbDownIcon/>}
+        {comment.votes >= 0 ? <ThumbUpIcon /> : <ThumbDownIcon />}
         <Typography variant="body">{comment.votes}</Typography>
       </ListItem>
       <Divider variant="inset" component="li" />
