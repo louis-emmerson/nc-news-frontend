@@ -26,7 +26,7 @@ function CommentAdder(props) {
 
 
 
-  const user = useContext(tickle122)
+   const user = useContext(tickle122)
 
   function addNewComment() {
     setIsError(false)

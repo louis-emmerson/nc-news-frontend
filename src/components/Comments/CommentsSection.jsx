@@ -25,11 +25,11 @@ function CommentsSection(props){
           })
       }, [newComments])
 
-    if(isLoading) return <></>
 
     return(<>
     <CommentAdder  articleID={articleID} setNewComments={setNewComments} />
-    <CommentList articleID={articleID} comments={comments}/>
+    {isLoading? null : <CommentList articleID={articleID} comments={comments}/>}
+    
     </>)
 
 }
