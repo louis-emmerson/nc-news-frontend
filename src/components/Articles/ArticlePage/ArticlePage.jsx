@@ -13,6 +13,7 @@ import { getArticleByID } from "../../../utils/api"
 import CommentList from "../../Comments/CommentList"
 import Like from "../../Like"
 import ArticleLikeCounter from "../../ArticleLikeCounter"
+import Unlike from "../../Unlike "
 
 function ArticlePage() {
   const { articleID } = useParams()
@@ -65,11 +66,19 @@ function ArticlePage() {
         <CardActions>
           <ArticleLikeCounter articleVotes={articleVotes} />
           {isLoading ? null : (
+            <>
             <Like
               articleID={articleID}
               setArticleVotes={setArticleVotes}
               articleVotes={articleVotes}
-            />
+              />
+            <Unlike
+              articleID={articleID}
+              setArticleVotes={setArticleVotes}
+              articleVotes={articleVotes}
+              />
+            </>
+
           )}
         </CardActions>
         <CommentList articleID={articleID} />

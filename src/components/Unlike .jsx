@@ -1,11 +1,12 @@
-import ThumbUpIconOutlined from "@mui/icons-material/ThumbUpOutlined"
-import ThumbUpIcon from "@mui/icons-material/ThumbUp"
+import ThumbDownIcon from "@mui/icons-material/ThumbDown"
+import ThumbDownIconOutlined from "@mui/icons-material/ThumbDownOutlined"
+
 import { Button } from "@mui/material"
 import { useState } from "react"
 import { patchUpdateArticleVotes } from "../utils/api"
 import Error from "./Alerts/Error"
 
-function Like(props) {
+function Unlike(props) {
   const { articleID, setArticleVotes } = props
   const [isArticleLiked, setIsArticleLiked] = useState(false)
   const [isArticleLikedError, setIsArticleLikedError] = useState(false)
@@ -16,23 +17,23 @@ function Like(props) {
         onClick={() => {
           setIsArticleLiked(true)
           setArticleVotes((current) => {
-            const newLike = current + 1
+            const newLike = current - 1
             return newLike
           })
-          patchUpdateArticleVotes(articleID, 1).catch(() => {
+          patchUpdateArticleVotes(articleID, -1).catch(() => {
             setIsArticleLiked(false)
             setIsArticleLikedError(true)
             setArticleVotes((current) => {
-              const newLike = current - 1
+              const newLike = current + 1
               return newLike
             })
           })
         }}
         disabled={isArticleLiked || isArticleLikedError}
         variant="contained"
-        endIcon={isArticleLiked ? <ThumbUpIcon /> : <ThumbUpIconOutlined />}
+        endIcon={isArticleLiked ? <ThumbDownIcon /> : <ThumbDownIconOutlined />}
       >
-        Like
+        Unlike
       </Button>
       {isArticleLikedError ? (
         <Error errorMsg={"There has been an error liking this article."} />
@@ -41,4 +42,4 @@ function Like(props) {
   )
 }
 
-export default Like
+export default Unlike

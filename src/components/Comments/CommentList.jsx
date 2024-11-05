@@ -4,6 +4,7 @@ import List from "@mui/material/List"
 import { getCommentsByArticleID } from "../../utils/api"
 import Error from "../Alerts/Error"
 import LinearProgress from "@mui/material/LinearProgress"
+import CommentAdder from "./CommentAdder"
 
 function CommentList(props) {
   const { articleID } = props
@@ -34,11 +35,14 @@ function CommentList(props) {
     )
 
   return (
+    <>
+    <CommentAdder/>
     <List sx={{ width: "100%", maxWidth: 800, bgcolor: "background.paper" }}>
       {comments.map((comment) => {
         return <CommentCard key={comment.comemnt_id} comment={comment} />
       })}
     </List>
+    </>
   )
 }
 
