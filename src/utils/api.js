@@ -5,7 +5,6 @@ const api = axios.create({
 })
 
 function getArticles(page = 0) {
-  console.log(page)
   let url = `/api/articles?p=${page}`
   return api.get(url).then(({ data }) => {
     return data.articles
@@ -24,8 +23,8 @@ function getCommentsByArticleID(article_id) {
   })
 }
 
-function patchUpdateArticleVotes(article_id) {
-  const data = { inc_votes: 1 }
+function patchUpdateArticleVotes(article_id, likesToAdd) {
+  const data = { inc_votes: likesToAdd }
   return api.patch(`/api/articles/${article_id}`, data).then()
 }
 
