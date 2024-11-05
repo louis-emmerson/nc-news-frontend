@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getArticles, getMoreArticles } from "../../../utils/api"
+import { getArticles } from "../../../utils/api"
 import ArticleCard from "./ArticleCard"
 import { Alert, Button } from "@mui/material"
 import { Error } from "@mui/icons-material"
@@ -24,10 +24,7 @@ function ArticlesList() {
       })
   }, [])
 
-  if (isError)
-    return (
-      <Error/>
-    )
+  if (isError) return <Error />
 
   if (isLoading) {
     return (
@@ -64,7 +61,7 @@ function ArticlesList() {
         variant="contained"
         size="large"
         onClick={() => {
-          getMoreArticles(page).then((articlesToAdd) => {
+          getArticles(page).then((articlesToAdd) => {
             const newArticles = [...articles, ...articlesToAdd]
             setArticles(newArticles)
             let newPage = page

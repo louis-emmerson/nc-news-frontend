@@ -1,35 +1,37 @@
 import axios from "axios"
 
-function getArticles() {
-  return axios
-    .get("https://api-nc-news.louis-emmerson.dev/api/articles")
-    .then(({ data }) => {
-      return data.articles
-    })
-}
+const api = axios.create({
+  baseURL: "https://api-nc-news.louis-emmerson.dev",
+})
 
-function getMoreArticles(page) {
-  return axios
-    .get(`https://api-nc-news.louis-emmerson.dev/api/articles?p=${page}`)
-    .then(({ data }) => {
-      return data.articles
-    })
+function getArticles(page = 0) {
+  console.log(page)
+  let url = `/api/articles?p=${page}`
+  return api.get(url).then(({ data }) => {
+    return data.articles
+  })
 }
 
 function getArticleByID(article_id) {
-  return axios
-    .get(`https://api-nc-news.louis-emmerson.dev/api/articles/${article_id}`)
-    .then(({ data }) => {
-      return data.article
-    })
+  return api.get(`/api/articles/${article_id}`).then(({ data }) => {
+    return data.article
+  })
 }
 
 function getCommentsByArticleID(article_id) {
-    return axios
-      .get(`https://api-nc-news.louis-emmerson.dev/api/articles/${article_id}/comments`)
-      .then(({ data }) => {
-        return data.comments
-      })
-  }
+  return api.get(`/api/articles/${article_id}/comments`).then(({ data }) => {
+    return data.comments
+  })
+}
 
-export { getArticles, getMoreArticles, getArticleByID ,getCommentsByArticleID}
+function patchUpdateArticleVotes(article_id) {
+  const data = { inc_votes: 1 }
+  return api.patch(`/api/articles/${article_id}`, data).then()
+}
+
+export {
+  getArticles,
+  getArticleByID,
+  getCommentsByArticleID,
+  patchUpdateArticleVotes,
+}
