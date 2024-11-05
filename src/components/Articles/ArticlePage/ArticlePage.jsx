@@ -10,7 +10,6 @@ import {
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleByID } from "../../../utils/api"
-import CommentList from "../../Comments/CommentList"
 import Like from "../../Like"
 import ArticleLikeCounter from "../../ArticleLikeCounter"
 import Unlike from "../../Unlike "

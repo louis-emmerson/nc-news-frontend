@@ -16,47 +16,44 @@ import Success from "../Alerts/Success"
 import { tickle122 } from "../../context/loggedInUser"
 
 function CommentAdder(props) {
-  const {articleID, setNewComments } = props
+  const { articleID, setNewComments } = props
   const [newCommentInput, setNewCommentInput] = useState("")
   const [isWarning, setIsWarning] = useState(false)
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-
-
-
-   const user = useContext(tickle122)
+  const user = useContext(tickle122)
 
   function addNewComment() {
     setIsError(false)
     setIsWarning(false)
     setIsLoading(true)
     setIsSuccess(false)
-    if(newCommentInput === ""){
-        setIsWarning(true)
-        setIsLoading(false)
-    }else{
-        const newCommentBody = {
-          body: newCommentInput,
-          username: user.username,
-        }
-    
-        postNewArticleComment(articleID, newCommentBody)
-          .then(() => {
-            setNewComments((current) => {
-              return [newCommentBody, ...current]
-            })
-            setIsSuccess(true)
-            setIsLoading(false)
-            setNewCommentInput("")
-          })
-          .catch((err) => {
-            setIsLoading(false)
-            setIsError(true)
-          })
+    if (newCommentInput === "") {
+      setIsWarning(true)
+      setIsLoading(false)
+    } else {
+      const newCommentBody = {
+        body: newCommentInput,
+        username: user.username,
       }
+
+      postNewArticleComment(articleID, newCommentBody)
+        .then(() => {
+          setNewComments((current) => {
+            return [newCommentBody, ...current]
+          })
+          setIsSuccess(true)
+          setIsLoading(false)
+          setNewCommentInput("")
+        })
+        .catch((err) => {
+          setIsLoading(false)
+          setIsError(true)
+        })
     }
+  }
 
   return (
     <>
@@ -82,39 +79,39 @@ function CommentAdder(props) {
                 value={newCommentInput}
               />
               <br />
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Box sx={{position: 'relative' }}>
-              <Button
-                style={{height:40, width:150}}
-                onClick={() => {
-                    addNewComment()
-                }}
-                disabled={isLoading}
-                variant="contained"
-                >
-                {isLoading?null:"Add Comment"}
-              </Button>
-              {isLoading?<CircularProgress
-                size={24}
-                sx={{
-                    color:"white",
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                }}
-                />:null}
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{ position: "relative" }}>
+                  <Button
+                    style={{ height: 40, width: 150 }}
+                    onClick={() => {
+                      addNewComment()
+                    }}
+                    disabled={isLoading}
+                    variant="contained"
+                  >
+                    {isLoading ? null : "Add Comment"}
+                  </Button>
+                  {isLoading ? (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        color: "white",
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-12px",
+                        marginLeft: "-12px",
+                      }}
+                    />
+                  ) : null}
                 </Box>
-             </Box>
-                
+              </Box>
 
-              {isWarning?<Warning warningMsg={"A comment must contain some text"} />:null}
-              {isError?<Error /> :null}
-              {isSuccess?<Success successMsg={"Comment Added"}/> :null}
-
-
-              
+              {isWarning ? (
+                <Warning warningMsg={"A comment must contain some text"} />
+              ) : null}
+              {isError ? <Error /> : null}
+              {isSuccess ? <Success successMsg={"Comment Added"} /> : null}
             </>
           }
         />
