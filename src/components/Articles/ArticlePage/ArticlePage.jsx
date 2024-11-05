@@ -14,6 +14,7 @@ import CommentList from "../../Comments/CommentList"
 import Like from "../../Like"
 import ArticleLikeCounter from "../../ArticleLikeCounter"
 import Unlike from "../../Unlike "
+import CommentsSection from "../../Comments/CommentsSection"
 
 function ArticlePage() {
   const { articleID } = useParams()
@@ -64,9 +65,9 @@ function ArticlePage() {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <ArticleLikeCounter articleVotes={articleVotes} />
           {isLoading ? null : (
             <>
+            <ArticleLikeCounter articleVotes={articleVotes} />
             <Like
               articleID={articleID}
               setArticleVotes={setArticleVotes}
@@ -81,7 +82,7 @@ function ArticlePage() {
 
           )}
         </CardActions>
-        <CommentList articleID={articleID} />
+          <CommentsSection articleID={articleID} />
       </Card>
     </>
   )
