@@ -6,7 +6,7 @@ import CardActionArea from "@mui/material/CardActionArea"
 import CardActions from "@mui/material/CardActions"
 import { Skeleton } from "@mui/material"
 import { Link } from "react-router-dom"
-import ArticleLikeCounter from "../../ArticleLikeCounter"
+import LikeCounter from "../../LikeCounter"
 
 function ArticleCard(props) {
   const { article, isLoading } = props
@@ -41,7 +41,7 @@ function ArticleCard(props) {
         </CardActionArea>
       </Link>
       <CardActions>
-        {isLoading ? null : <ArticleLikeCounter articleVotes={votes} />}
+        {isLoading ? null : <LikeCounter votes={votes} />}
       </CardActions>
     </Card>
   )

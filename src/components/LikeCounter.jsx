@@ -3,17 +3,17 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown"
 
 import { Button } from "@mui/material"
 
-function ArticleLikeCounter(props) {
-  const { articleVotes } = props
+function LikeCounter(props) {
+  const { votes } = props
 
   return (
       <Button
-        startIcon={articleVotes >= 0 ? <ThumbUpIcon /> : <ThumbDownIcon />}
+        startIcon={votes >= 0 ? <ThumbUpIcon /> : <ThumbDownIcon />}
         variant="contained"
       >
-        {articleVotes}
+        {votes}
       </Button>
   )
 }
 
-export default ArticleLikeCounter
+export default LikeCounter

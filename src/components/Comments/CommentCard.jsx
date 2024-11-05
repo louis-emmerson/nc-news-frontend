@@ -4,14 +4,32 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
 } from "@mui/material"
-import React from "react"
-import ThumbUpIcon from "@mui/icons-material/ThumbUpOutlined"
-import ThumbDownIcon from "@mui/icons-material/ThumbDownOutlined"
+import React, { useContext} from "react"
+import LikeCounter from "../LikeCounter"
+import { tickle122 } from "../../context/loggedInUser"
+import DeleteButton from "../DeleteButton"
+import { deleteArticleComment } from "../../utils/api"
+
+
+
 
 function CommentCard(props) {
-  const { comment } = props
+  const { comment, setComments } = props
+  
+  function deleteComment(){
+    deleteArticleComment(comment.comment_id).then(()=>{
+      console.log("Comment Deleted")
+      setComments((curentComments)=>{
+        return curentComments.filter((currComment)=> comment.comment_id !== currComment.comment_id)
+      })
+      
+    })
+    
+  }
+ 
+  const loggedInUser = useContext(tickle122)
+
   const dateFormat = new Date(comment.created_at);
   return (
     <>
@@ -32,9 +50,9 @@ function CommentCard(props) {
         />
       </ListItem>
 
-      <ListItem>
-        {comment.votes >= 0 ? <ThumbUpIcon /> : <ThumbDownIcon />}
-        <Typography variant="body">{comment.votes}</Typography>
+      <ListItem style={{display:"flex",justifyContent:"space-between"}}>
+      <LikeCounter votes={comment.votes}/>
+      {loggedInUser.username ===comment.author? <DeleteButton deleteFunction={deleteComment}/>:null}
       </ListItem>
       <Divider variant="inset" component="li" />
 

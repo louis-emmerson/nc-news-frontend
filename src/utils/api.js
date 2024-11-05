@@ -32,10 +32,15 @@ function postNewArticleComment(article_id,commentData){
   return api.post(`/api/articles/${article_id}/comments`, commentData).then()
 }
 
+function deleteArticleComment(commentID){
+  return api.delete(`/api/comments/${commentID}`)
+}
+
 export {
   getArticles,
   getArticleByID,
   getCommentsByArticleID,
   patchUpdateArticleVotes,
-  postNewArticleComment
+  postNewArticleComment,
+  deleteArticleComment
 }
