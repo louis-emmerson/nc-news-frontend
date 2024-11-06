@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getArticleByID } from "../../../utils/api"
 import Like from "../../Like"
 import Unlike from "../../Unlike "
@@ -17,6 +17,7 @@ import LikeCounter from "../../LikeCounter"
 
 function ArticlePage() {
   const { articleID } = useParams()
+  const navigate = useNavigate() 
 
   const [article, setArticle] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -28,6 +29,8 @@ function ArticlePage() {
       setArticle(article)
       setArticleVotes(article.votes)
       setIsLoading(false)
+    }).catch(()=>{
+      return navigate("/404NotFound")
     })
   }, [])
 

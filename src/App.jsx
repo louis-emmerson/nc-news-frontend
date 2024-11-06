@@ -18,6 +18,7 @@ function App() {
           <Route path="/articles/" element={<ArticlesPage />} />
           <Route path="/article/:articleID" element={<ArticlePage />} />
           <Route path="/topics" element={<TopicsPage />} />
+          <Route path="/404NotFound" element={<PageNotFound />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Container>
