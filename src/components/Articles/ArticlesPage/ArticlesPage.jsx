@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material"
 import ArticlesList from "./ArticlesList"
+import ArticlesPageTopBar from "./AtriclesPageTopBar"
 
 function ArticlesPage(){
     return (
     <>
-    <Typography style={{textAlign:"center"}} variant="h4">Articles</Typography>
+    <ArticlesPageTopBar/>
     <ArticlesList/>
     </>
 )
