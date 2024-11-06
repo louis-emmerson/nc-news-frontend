@@ -1,45 +1,54 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material"
-import { useState } from "react"
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material"
 
-function ArticlesPageTopBar() {
-  const [sortByInput, setSortByInput] = useState("Title")
-  const [orderByInput, setOrderByInput] = useState("ASC")
-
+function ArticlesPageTopBar(props) {
+  const { orderByInput, setOrderByInput, sortByInput, setSortByInput } = props
   return (
-    <Box sx={{ display: "flex", justifyContent: "space-between", marginTop:1, marginBottom:1}}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        marginTop: 1,
+        marginBottom: 1,
+      }}
+    >
       <Typography variant="h4">Articles</Typography>
       <Box sx={{ display: "flex" }}>
-        <FormControl >
+        <FormControl>
           <InputLabel id="sort-by-select-label">Sort By</InputLabel>
           <Select
             labelId="sort-by-select-label"
             id="sort-by-select"
             value={sortByInput}
             label="Sort By"
-            onChange={(event)=>{
-                setSortByInput(event.target.value)
+            onChange={(event) => {
+              setSortByInput(event.target.value)
             }}
           >
-            <MenuItem value={"Title"}>Title</MenuItem>
-            <MenuItem value={"Date"}>Date</MenuItem>
-            <MenuItem value={"Votes"}>Votes</MenuItem>
-            <MenuItem value={"Comments"}>Comments</MenuItem>
+            <MenuItem value={"title"}>Title</MenuItem>
+            <MenuItem value={"created_at"}>Date</MenuItem>
+            <MenuItem value={"votes"}>Votes</MenuItem>
           </Select>
         </FormControl>
-        <FormControl >
+        <FormControl>
           <InputLabel id="order-by-select-label">Order By</InputLabel>
           <Select
             labelId="order-by-select-label"
             id="order-by-select"
             value={orderByInput}
             label="Order By"
-            onChange={(event)=>{
-                setOrderByInput(event.target.value)
+            onChange={(event) => {
+              setOrderByInput(event.target.value)
             }}
           >
             <MenuItem value={"ASC"}>ASC</MenuItem>
-            <MenuItem value={"DEC"}>DEC</MenuItem>
-
+            <MenuItem value={"DESC"}>DESC</MenuItem>
           </Select>
         </FormControl>
       </Box>

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react"
 import { getArticles } from "../../../utils/api"
 import ArticleCard from "./ArticleCard"
 import { Button } from "@mui/material"
-import { Error, Info } from "@mui/icons-material"
-import { useParams, useSearchParams } from "react-router-dom"
+import { Error } from "@mui/icons-material"
 import InfoAlert from "../../Alerts/Info"
+import { useSearchParams } from "react-router-dom"
 
-function ArticlesList() {
+function ArticlesList(props) {
+  const { orderByInput, sortByInput } = props
+
   const [articles, setArticles] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -20,7 +22,7 @@ function ArticlesList() {
   useEffect(() => {
     setIsError(false)
     setIsLoading(true)
-    getArticles(p, topic)
+    getArticles(p, topic, sortByInput, orderByInput)
       .then((articlesArray) => {
         setArticles(articlesArray)
         setIsLoading(false)
@@ -29,7 +31,7 @@ function ArticlesList() {
       .catch(() => {
         setIsError(true)
       })
-  }, [])
+  }, [sortByInput, orderByInput])
 
   if (isError) return <Error />
 
@@ -62,8 +64,8 @@ function ArticlesList() {
           gap: 10,
         }}
       >
-        {articles.map((article) => (
-          <ArticleCard key={article.id} article={article} isLoading={false} />
+        {articles.map((article, index) => (
+          <ArticleCard key={index} article={article} isLoading={false} />
         ))}
       </section>
       {isMoreResults ? (

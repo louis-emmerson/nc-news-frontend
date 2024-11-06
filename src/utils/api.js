@@ -4,12 +4,14 @@ const api = axios.create({
   baseURL: "https://api-nc-news.louis-emmerson.dev",
 })
 
-function getArticles(p = 0, topic) {
+function getArticles(p = 0, topic, sortBy, orderBy) {
   let url = `/api/articles`
 
   const paramsObj = {}
   if (p) paramsObj.p = p
   if (topic) paramsObj.topic = topic
+  if (sortBy) paramsObj.sort_by = sortBy
+  if (orderBy) paramsObj.order = orderBy
 
   return api.get(url, { params: paramsObj }).then(({ data }) => {
     return data.articles
