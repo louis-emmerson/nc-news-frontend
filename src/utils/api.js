@@ -36,11 +36,16 @@ function deleteArticleComment(commentID){
   return api.delete(`/api/comments/${commentID}`)
 }
 
+function getTopics(){
+  return api.get(`/api/topics`)
+}
+
 export {
   getArticles,
   getArticleByID,
   getCommentsByArticleID,
   patchUpdateArticleVotes,
   postNewArticleComment,
-  deleteArticleComment
+  deleteArticleComment,
+  getTopics
 }
