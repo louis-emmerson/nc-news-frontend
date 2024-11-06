@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react"
 import { getArticles } from "../../../utils/api"
 import ArticleCard from "./ArticleCard"
-import { Alert, Button } from "@mui/material"
-import { Error } from "@mui/icons-material"
+import { Button } from "@mui/material"
+import { Error, Info } from "@mui/icons-material"
+import { useParams, useSearchParams } from "react-router-dom"
+import InfoAlert from "../../Alerts/Info"
 
 function ArticlesList() {
   const [articles, setArticles] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [page, setPage] = useState(0)
+  const [isMoreResults, setIsMoreResults] = useState(true)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const topic = searchParams.get("topic")
+  const p = searchParams.get("p")
 
   useEffect(() => {
     setIsError(false)
     setIsLoading(true)
-    getArticles()
+    getArticles(p, topic)
       .then((articlesArray) => {
         setArticles(articlesArray)
         setIsLoading(false)
@@ -43,6 +50,8 @@ function ArticlesList() {
     )
   }
 
+  if (articles.length === 0) return <InfoAlert infoMsg={"No articles found"} />
+
   return (
     <>
       <section
@@ -57,20 +66,25 @@ function ArticlesList() {
           <ArticleCard key={article.id} article={article} isLoading={false} />
         ))}
       </section>
-      <Button
-        variant="contained"
-        size="large"
-        onClick={() => {
-          getArticles(page).then((articlesToAdd) => {
-            const newArticles = [...articles, ...articlesToAdd]
-            setArticles(newArticles)
-            let newPage = page
-            setPage(newPage + 1)
-          })
-        }}
-      >
-        Load More
-      </Button>
+      {isMoreResults ? (
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => {
+            getArticles(page, topic).then((articlesToAdd) => {
+              if (articlesToAdd.length < 10) setIsMoreResults(false)
+              const newArticles = [...articles, ...articlesToAdd]
+              setArticles(newArticles)
+              let newPage = page
+              setPage(newPage + 1)
+            })
+          }}
+        >
+          Load More
+        </Button>
+      ) : (
+        <InfoAlert infoMsg={"No more results"} />
+      )}
     </>
   )
 }

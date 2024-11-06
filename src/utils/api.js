@@ -4,9 +4,14 @@ const api = axios.create({
   baseURL: "https://api-nc-news.louis-emmerson.dev",
 })
 
-function getArticles(page = 0) {
-  let url = `/api/articles?p=${page}`
-  return api.get(url).then(({ data }) => {
+function getArticles(p = 0, topic) {
+  let url = `/api/articles`
+
+  const paramsObj = {}
+  if (p) paramsObj.p = p
+  if (topic) paramsObj.topic = topic
+
+  return api.get(url, { params: paramsObj }).then(({ data }) => {
     return data.articles
   })
 }
@@ -28,16 +33,18 @@ function patchUpdateArticleVotes(article_id, likesToAdd) {
   return api.patch(`/api/articles/${article_id}`, data).then()
 }
 
-function postNewArticleComment(article_id,commentData){
+function postNewArticleComment(article_id, commentData) {
   return api.post(`/api/articles/${article_id}/comments`, commentData).then()
 }
 
-function deleteArticleComment(commentID){
+function deleteArticleComment(commentID) {
   return api.delete(`/api/comments/${commentID}`)
 }
 
-function getTopics(){
-  return api.get(`/api/topics`)
+function getTopics() {
+  return api.get(`/api/topics`).then(({ data }) => {
+    return data.topics
+  })
 }
 
 export {
@@ -47,5 +54,5 @@ export {
   patchUpdateArticleVotes,
   postNewArticleComment,
   deleteArticleComment,
-  getTopics
+  getTopics,
 }

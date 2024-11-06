@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom"
 import HomepagePage from "./components/Homepage/HomepagePage"
 import ArticlesPage from "./components/Articles/ArticlesPage/ArticlesPage"
 import ArticlePage from "./components/Articles/ArticlePage/ArticlePage"
+import TopicsPage from "./components/Topics/TopicsPage"
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<HomepagePage />} />
-          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/" element={<ArticlesPage />} />
           <Route path="/article/:articleID" element={<ArticlePage />} />
+          <Route path="/topics" element={<TopicsPage />} />
         </Routes>
       </Container>
     </>
