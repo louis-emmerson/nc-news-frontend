@@ -1,13 +1,21 @@
-import { Typography } from "@mui/material"
+import { useState } from "react"
 import ArticlesList from "./ArticlesList"
+import ArticlesPageTopBar from "./AtriclesPageTopBar"
 
-function ArticlesPage(){
-    return (
+function ArticlesPage() {
+  const [sortByInput, setSortByInput] = useState("title")
+  const [orderByInput, setOrderByInput] = useState("ASC")
+  return (
     <>
-    <Typography style={{textAlign:"center"}} variant="h4">Articles</Typography>
-    <ArticlesList/>
+      <ArticlesPageTopBar
+        sortByInput={sortByInput}
+        setSortByInput={setSortByInput}
+        orderByInput={orderByInput}
+        setOrderByInput={setOrderByInput}
+      />
+      <ArticlesList sortByInput={sortByInput} orderByInput={orderByInput} />
     </>
-)
+  )
 }
 
 export default ArticlesPage
