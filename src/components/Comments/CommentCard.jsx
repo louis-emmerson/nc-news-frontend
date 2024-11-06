@@ -4,14 +4,43 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography,
 } from "@mui/material"
-import React from "react"
-import ThumbUpIcon from "@mui/icons-material/ThumbUpOutlined"
-import ThumbDownIcon from "@mui/icons-material/ThumbDownOutlined"
+import React, { useContext, useState} from "react"
+import LikeCounter from "../LikeCounter"
+import { tickle122 } from "../../context/loggedInUser"
+import { deleteArticleComment } from "../../utils/api"
+import DeleteCommentButton from "../Buttons/DeleteComment"
+import Error from "../Alerts/Error"
+
+
+
 
 function CommentCard(props) {
-  const { comment } = props
+  const { comment, setComments } = props
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isCommentDeleteError, setIsCommentDeleteError] = useState(false)
+  const [isDeleteDisabled, setIsDeleteDisabled] = useState(false)
+
+  
+  function deleteComment(){
+    setIsDeleting(true)
+    deleteArticleComment(comment.comment_id).then(()=>{
+      console.log("Comment Deleted")
+      setIsDeleting(false)
+      setComments((curentComments)=>{
+        return curentComments.filter((currComment)=> comment.comment_id !== currComment.comment_id)
+      })
+      
+    }).catch(()=>{
+      setIsDeleting(false)
+      setIsCommentDeleteError(true)
+      setIsDeleteDisabled(true)
+    })
+    
+  }
+ 
+  const loggedInUser = useContext(tickle122)
+
   const dateFormat = new Date(comment.created_at);
   return (
     <>
@@ -32,10 +61,12 @@ function CommentCard(props) {
         />
       </ListItem>
 
-      <ListItem>
-        {comment.votes >= 0 ? <ThumbUpIcon /> : <ThumbDownIcon />}
-        <Typography variant="body">{comment.votes}</Typography>
+      <ListItem style={{display:"flex",justifyContent:"space-between"}}>
+      <LikeCounter votes={comment.votes}/>
+      {loggedInUser.username ===comment.author? <DeleteCommentButton isLoading={isDeleting} deleteComment={deleteComment} isDeleteDisabled={isDeleteDisabled}/>:null}
+      
       </ListItem>
+      {isCommentDeleteError? <Error errorMsg={"There has been an error deleting your comment."}/>:null}
       <Divider variant="inset" component="li" />
 
     </>

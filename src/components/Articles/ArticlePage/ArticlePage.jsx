@@ -11,9 +11,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getArticleByID } from "../../../utils/api"
 import Like from "../../Like"
-import ArticleLikeCounter from "../../ArticleLikeCounter"
 import Unlike from "../../Unlike "
 import CommentsSection from "../../Comments/CommentsSection"
+import LikeCounter from "../../LikeCounter"
 
 function ArticlePage() {
   const { articleID } = useParams()
@@ -66,7 +66,7 @@ function ArticlePage() {
         <CardActions>
           {isLoading ? null : (
             <>
-            <ArticleLikeCounter articleVotes={articleVotes} />
+            <LikeCounter votes={articleVotes} />
             <Like
               articleID={articleID}
               setArticleVotes={setArticleVotes}
