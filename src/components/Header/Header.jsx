@@ -1,13 +1,15 @@
-import { Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import MobileMenu from "./MobileMenu"
 import  "./Header.css"
+import { Link } from "react-router-dom"
+import logo from "../../Images/logo.jpeg"
 
 function Header(){
     return(
-    <section id="mobileHeader">
-        <Typography variant="h2">NC News</Typography>
+    <Box sx={{backgroundColor:"black"}}id="mobileHeader">
+        <img src={logo}/> 
         <MobileMenu/>
-    </section>
+    </Box>
 )
 }
 

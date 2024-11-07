@@ -151,7 +151,7 @@ function MobileMenu() {
 
   return (
     <div>
-      <MenuIcon fontSize="large" onClick={toggleDrawer(true)} />
+      <MenuIcon sx={{color:"white", paddingRight:2}}fontSize="large" onClick={toggleDrawer(true)} />
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
