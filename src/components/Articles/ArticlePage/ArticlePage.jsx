@@ -22,6 +22,7 @@ function ArticlePage() {
   const [article, setArticle] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [articleVotes, setArticleVotes] = useState(0)
+  const dateFormat = new Date(article.created_at);
 
   useEffect(() => {
     setIsLoading(true)
@@ -64,6 +65,10 @@ function ArticlePage() {
             <Typography gutterBottom variant="body" component="div">
               {isLoading ? <Skeleton /> : article.body}
             </Typography>
+            <Typography variant="caption">
+              {isLoading ? <Skeleton /> :  "Posted: " +dateFormat.toISOString().substring(0, 10)}
+            </Typography>
+
           </CardContent>
         </CardActionArea>
         <CardActions>

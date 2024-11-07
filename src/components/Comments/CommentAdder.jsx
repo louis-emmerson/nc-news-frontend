@@ -48,7 +48,7 @@ function CommentAdder(props) {
           setIsLoading(false)
           setNewCommentInput("")
         })
-        .catch((err) => {
+        .catch(() => {
           setIsLoading(false)
           setIsError(true)
         })
