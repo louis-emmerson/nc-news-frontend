@@ -41,12 +41,12 @@ function CommentAdder(props) {
 
       postNewArticleComment(articleID, newCommentBody)
         .then((newComment) => {
-          console.log(newComment)
           setComments((current) => {
-            return [newCommentBody, ...current]
+            return [newComment, ...current]
           })
           setIsSuccess(true)
           setIsLoading(false)
+          setNewCommentInput("")
         })
         .catch((err) => {
           setIsLoading(false)
