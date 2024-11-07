@@ -9,21 +9,28 @@ import NewspaperIcon from "@mui/icons-material/NewspaperOutlined"
 import CodingIcon from "@mui/icons-material/DeveloperModeOutlined"
 import RestaurantIcon from "@mui/icons-material/RestaurantOutlined"
 import FootballIcon from "@mui/icons-material/SportsSoccerOutlined"
-import { Link as RouterLink } from 'react-router-dom';
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Link } from "react-router-dom"
+import { tickle122 } from "../../context/loggedInUser"
+
 import {
   Button,
+  Card,
+  CardActions,
+  CardContent,
   Collapse,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  Typography,
 } from "@mui/material"
 
 function MobileMenu() {
   const [open, setOpen] = React.useState(false)
   const [openMenu, setOpenMenu] = React.useState(false)
+
+  const user = React.useContext(tickle122)
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen)
@@ -35,17 +42,38 @@ function MobileMenu() {
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
+      <Box >
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="h5" component="div">
+            {`Hello, ${user.username}`}
+          </Typography>
+        </CardContent>
+        <CardActions>
+        <Link to={`/articles?topic=${1}`}>
+          <Button variant="contained"size="small">Post Article</Button>
+        </Link>
+        </CardActions>
+      </Card>
+    </Box>
+      
+      
+      
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
-        aria-labelledby="nested-list-subheader"
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
             Navigation
           </ListSubheader>
         }
       >
-        <ListItemButton component={RouterLink} to="/" onClick={toggleDrawer(false)}>
+        
+        <ListItemButton
+          component={Link}
+          to="/"
+          onClick={toggleDrawer(false)}
+        >
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -57,7 +85,11 @@ function MobileMenu() {
             setOpen(false)
           }}
         ></Link>
-        <ListItemButton component={RouterLink} to="/articles" onClick={toggleDrawer(false)}>
+        <ListItemButton
+          component={Link}
+          to="/articles"
+          onClick={toggleDrawer(false)}
+        >
           <ListItemIcon>
             <NewspaperIcon />
           </ListItemIcon>
@@ -72,19 +104,34 @@ function MobileMenu() {
         </ListItemButton>
         <Collapse in={openMenu} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/articles?topic=coding" onClick={toggleDrawer(false)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              component={Link}
+              to="/articles?topic=coding"
+              onClick={toggleDrawer(false)}
+            >
               <ListItemIcon>
                 <CodingIcon />
               </ListItemIcon>
               <ListItemText primary="Coding" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/articles?topic=cooking" onClick={toggleDrawer(false)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              component={Link}
+              to="/articles?topic=cooking"
+              onClick={toggleDrawer(false)}
+            >
               <ListItemIcon>
                 <RestaurantIcon />
               </ListItemIcon>
               <ListItemText primary="Cooking" />
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} component={RouterLink} to="/articles?topic=football" onClick={toggleDrawer(false)}>
+            <ListItemButton
+              sx={{ pl: 4 }}
+              component={Link}
+              to="/articles?topic=football"
+              onClick={toggleDrawer(false)}
+            >
               <ListItemIcon>
                 <FootballIcon />
               </ListItemIcon>
@@ -92,7 +139,13 @@ function MobileMenu() {
             </ListItemButton>
           </List>
         </Collapse>
+        
+        
       </List>
+      <Link to={`/articles?topic=${1}`}>
+          <Button variant="contained"size="small">Log Out</Button>
+        </Link>
+      
     </Box>
   )
 
