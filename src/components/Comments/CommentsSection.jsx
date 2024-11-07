@@ -27,7 +27,7 @@ function CommentsSection(props){
 
 
     return(<>
-    <CommentAdder  articleID={articleID} setNewComments={setNewComments} />
+    <CommentAdder  articleID={articleID} setNewComments={setNewComments} setComments={setComments} />
     {isLoading? null : <CommentList articleID={articleID} comments={comments} setComments={setComments}/>}
     
     </>)

@@ -16,7 +16,7 @@ import Success from "../Alerts/Success"
 import { tickle122 } from "../../context/loggedInUser"
 
 function CommentAdder(props) {
-  const { articleID, setNewComments } = props
+  const { articleID, setComments } = props
   const [newCommentInput, setNewCommentInput] = useState("")
   const [isWarning, setIsWarning] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -40,13 +40,13 @@ function CommentAdder(props) {
       }
 
       postNewArticleComment(articleID, newCommentBody)
-        .then(() => {
-          setNewComments((current) => {
+        .then((newComment) => {
+          console.log(newComment)
+          setComments((current) => {
             return [newCommentBody, ...current]
           })
           setIsSuccess(true)
           setIsLoading(false)
-          setNewCommentInput("")
         })
         .catch((err) => {
           setIsLoading(false)
