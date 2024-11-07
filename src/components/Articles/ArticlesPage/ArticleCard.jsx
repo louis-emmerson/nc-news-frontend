@@ -11,7 +11,9 @@ import CommentCounter from "../../CommentCounter"
 
 function ArticleCard(props) {
   const { article, isLoading } = props
-  const { article_id, title, author, article_img_url, votes, comment_count } = article
+  const { article_id, title, author, article_img_url, votes, comment_count,created_at } = article
+  const dateFormat = new Date(created_at);
+
   return (
     <Card sx={{ width: 375, minHeight: 300 }}>
       <Link to={`/article/${article_id}`}>
@@ -32,6 +34,9 @@ function ArticleCard(props) {
           )}
 
           <CardContent>
+            <Typography variant="caption">
+              {isLoading ? <Skeleton /> : dateFormat.toISOString().substring(0, 10)}
+            </Typography>
             <Typography gutterBottom variant="h5" component="div">
               {isLoading ? <Skeleton /> : title}
             </Typography>
