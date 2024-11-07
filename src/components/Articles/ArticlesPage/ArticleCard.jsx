@@ -21,12 +21,12 @@ function ArticleCard(props) {
     created_at,
   } = article
   const dateFormat = new Date(created_at)
-  console.log(article)
   return (
     <Card
+      elevation={5}
       component={Link}
       to={`/article/${article_id}`}
-      sx={{ width: 375, minHeight: 300 }}
+      sx={{ width: 350, minHeight: 300 }}
     >
       <CardActionArea>
         {isLoading ? (
