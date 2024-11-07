@@ -50,7 +50,7 @@ function MobileMenu() {
           </Typography>
         </CardContent>
         <CardActions>
-        <Link to={`/articles?topic=${1}`}>
+        <Link to={`/articles?topic=coding`}>
           <Button variant="contained"size="small">Post Article</Button>
         </Link>
         </CardActions>

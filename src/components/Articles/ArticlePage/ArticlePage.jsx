@@ -22,7 +22,14 @@ function ArticlePage() {
   const [article, setArticle] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [articleVotes, setArticleVotes] = useState(0)
-  const dateFormat = new Date(article.created_at);
+  
+  let formattedDate = null
+
+  if(article.created_at){
+    const dateFormat = new Date(article.created_at)
+    formattedDate = dateFormat.toISOString().substring(0, 10)
+  }
+  
 
   useEffect(() => {
     setIsLoading(true)
@@ -34,6 +41,8 @@ function ArticlePage() {
       return navigate("/404NotFound")
     })
   }, [])
+  
+  
 
   return (
     <>
@@ -66,7 +75,7 @@ function ArticlePage() {
               {isLoading ? <Skeleton /> : article.body}
             </Typography>
             <Typography variant="caption">
-              {isLoading ? <Skeleton /> :  "Posted: " +dateFormat.toISOString().substring(0, 10)}
+              {isLoading ? <Skeleton /> :  formattedDate}
             </Typography>
 
           </CardContent>
