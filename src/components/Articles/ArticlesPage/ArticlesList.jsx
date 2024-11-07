@@ -31,7 +31,7 @@ function ArticlesList(props) {
       .catch(() => {
         setIsError(true)
       })
-  }, [sortByInput, orderByInput])
+  }, [sortByInput, orderByInput,topic])
 
   if (isError) return <Error />
 

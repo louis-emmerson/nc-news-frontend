@@ -11,8 +11,8 @@ import PageNotFound from "./routes/NotFound"
 function App() {
   return (
     <>
-      <Header />
       <Container>
+        <Header />
         <Routes>
           <Route path="/" element={<HomepagePage />} />
           <Route path="/articles/" element={<ArticlesPage />} />
