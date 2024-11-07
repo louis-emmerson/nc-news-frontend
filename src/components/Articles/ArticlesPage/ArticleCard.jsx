@@ -7,10 +7,11 @@ import CardActions from "@mui/material/CardActions"
 import { Skeleton } from "@mui/material"
 import { Link } from "react-router-dom"
 import LikeCounter from "../../LikeCounter"
+import CommentCounter from "../../CommentCounter"
 
 function ArticleCard(props) {
   const { article, isLoading } = props
-  const { article_id, title, author, article_img_url, votes } = article
+  const { article_id, title, author, article_img_url, votes, comment_count } = article
   return (
     <Card sx={{ width: 375, minHeight: 300 }}>
       <Link to={`/article/${article_id}`}>
@@ -39,10 +40,11 @@ function ArticleCard(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Link>
       <CardActions>
         {isLoading ? null : <LikeCounter votes={votes} />}
+        {isLoading ? null : <CommentCounter comments={comment_count} />}
       </CardActions>
+      </Link>
     </Card>
   )
 }

@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom"
 function ArticlesList(props) {
   const { orderByInput, sortByInput } = props
 
-  const [articles, setArticles] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  const [articles, setArticles] = useState(Array(10))
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [page, setPage] = useState(0)
