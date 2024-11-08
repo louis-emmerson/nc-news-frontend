@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
-import { getTopics, postNewArticle } from "../../../utils/api"
+import { getTopics, postNewArticle, postNewTopic } from "../../../utils/api"
 import { tickle122 } from "../../../context/loggedInUser"
 
 function ArticleCreatePage() {
@@ -29,23 +29,40 @@ function ArticleCreatePage() {
     getTopics().then((topics) => {
       setTopics(topics)
     })
-  })
+  }, [])
 
-  const postArticle = (input) => {
-    if (selectTopicInput === "New Topic") {
-      console.log("new Topic")
-    } else {
+  const postArticleSubmit = (input) => {
+    const postArticle = () => {
       console.log(input)
+
       const newPost = {
         author: loggedInUser.username,
         title: titleInput,
         body: bodyInput,
-        topic: selectTopicInput,
       }
+
+      if (selectTopicInput === "New Topic") {
+        newPost.topic = newTopicTitle
+      }else{
+        newPost.topic= selectTopicInput
+      }
+      console.log(newPost)
       postNewArticle(newPost).then((result) => {
         console.log(result)
         setNewArticle(result)
       })
+    }
+
+    if (selectTopicInput === "New Topic") {
+      console.log("new Topic")
+      postNewTopic({
+        slug: newTopicTitle,
+        description: newTopicDescription,
+      }).then(() => {
+        postArticle()
+      })
+    } else {
+      postArticle()
     }
   }
 
@@ -96,7 +113,7 @@ function ArticleCreatePage() {
             {topics.map((topic) => {
               return (
                 <MenuItem key={topic.slug} value={topic.slug}>
-                  {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                  {topic.slug}
                 </MenuItem>
               )
             })}
@@ -109,11 +126,19 @@ function ArticleCreatePage() {
               id="filled-basic"
               label="New Topic Title"
               variant="filled"
+              value={newTopicTitle}
+              onChange={(event) => {
+                setNewTopicTitle(event.target.value)
+              }}
             />
             <TextField
               id="filled-basic"
               label="New Topic Description"
               variant="filled"
+              value={newTopicDescription}
+              onChange={(event) => {
+                setNewTopicDescription(event.target.value)
+              }}
             />
           </>
         ) : null}
@@ -127,7 +152,7 @@ function ArticleCreatePage() {
             setArticleImageInput(event.target.value)
           }}
         />
-        <Button onClick={postArticle} variant="contained">
+        <Button onClick={postArticleSubmit} variant="contained">
           Submit
         </Button>
       </FormControl>

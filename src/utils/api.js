@@ -53,9 +53,16 @@ function getTopics() {
   })
 }
 
-function postNewArticle(articlebody) {
-  return api.post("/api/articles", articlebody).then(({ data }) => {
+function postNewArticle(articleBody) {
+  return api.post("/api/articles", articleBody).then(({ data }) => {
     return data.newArticle
+  })
+}
+
+function postNewTopic(topicBody) {
+  console.log(topicBody)
+  return api.post("/api/topics", topicBody).then(({ data }) => {
+    return data.newTopic
   })
 }
 
@@ -67,5 +74,6 @@ export {
   postNewArticleComment,
   deleteArticleComment,
   getTopics,
-  postNewArticle
+  postNewArticle,
+  postNewTopic 
 }
