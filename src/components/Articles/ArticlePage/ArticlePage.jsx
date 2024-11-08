@@ -57,9 +57,9 @@ function ArticlePage() {
           ) : (
             <CardMedia
               component="img"
-              height="10%"
               image={article.article_img_url}
               alt=""
+              sx={{width:"100%",maxHeight:500}}
             />
           )}
 
