@@ -36,9 +36,11 @@ function patchUpdateArticleVotes(article_id, likesToAdd) {
 }
 
 function postNewArticleComment(article_id, commentData) {
-  return api.post(`/api/articles/${article_id}/comments`, commentData).then(({data})=>{
-    return data.comment
-  })
+  return api
+    .post(`/api/articles/${article_id}/comments`, commentData)
+    .then(({ data }) => {
+      return data.comment
+    })
 }
 
 function deleteArticleComment(commentID) {
@@ -51,6 +53,12 @@ function getTopics() {
   })
 }
 
+function postNewArticle(articlebody) {
+  return api.post("/api/articles", articlebody).then(({ data }) => {
+    return data.newArticle
+  })
+}
+
 export {
   getArticles,
   getArticleByID,
@@ -59,4 +67,5 @@ export {
   postNewArticleComment,
   deleteArticleComment,
   getTopics,
+  postNewArticle
 }
