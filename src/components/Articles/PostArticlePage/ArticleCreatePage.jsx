@@ -66,7 +66,7 @@ function ArticleCreatePage() {
     const validUrlStringRegex =
       /^https?:\/\/(?:www\.)?[^\s\/$.?#].[^\s]*\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i
 
-    if (!articleImageInput.match(validUrlStringRegex)) {
+    if (articleImageInput&&!articleImageInput.match(validUrlStringRegex)) {
       setArticleImageError(true)
     }
     let hasError = false
@@ -99,6 +99,15 @@ function ArticleCreatePage() {
       return
     }
 
+    const clearInputs = () =>{
+        setTitleInput("")
+        setBodyInput("")
+        setSelectTopicInput("")
+        setArticleImageInput("")
+        setNewTopicTitle("")
+        setNewTopicDescription("")
+    }
+
     const postArticle = () => {
       const newPost = {
         author: loggedInUser.username,
@@ -115,6 +124,7 @@ function ArticleCreatePage() {
       postNewArticle(newPost).then((result) => {
         setNewArticle(result)
         setIsPostingArticle(false)
+        clearInputs()
       })
     }
 
