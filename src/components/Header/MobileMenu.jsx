@@ -42,23 +42,29 @@ function MobileMenu() {
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation">
-      <Box >
-      <Card variant="outlined">
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {`Hello, ${user.username}`}
-          </Typography>
-        </CardContent>
-        <CardActions>
-        <Link to={`/articles?topic=coding`}>
-          <Button variant="contained"size="small">Post Article</Button>
-        </Link>
-        </CardActions>
-      </Card>
-    </Box>
-      
-      
-      
+      <Box>
+        <Card variant="outlined">
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {`Hello, ${user.username}`}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              component={Link}
+              to={"/create-article"}
+              onClick={
+                toggleDrawer(false)
+              }
+              variant="contained"
+              size="small"
+            >
+              Create Article
+            </Button>
+          </CardActions>
+        </Card>
+      </Box>
+
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"
@@ -68,12 +74,7 @@ function MobileMenu() {
           </ListSubheader>
         }
       >
-        
-        <ListItemButton
-          component={Link}
-          to="/"
-          onClick={toggleDrawer(false)}
-        >
+        <ListItemButton component={Link} to="/" onClick={toggleDrawer(false)}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -139,19 +140,22 @@ function MobileMenu() {
             </ListItemButton>
           </List>
         </Collapse>
-        
-        
       </List>
       <Link to={`/articles?topic=${1}`}>
-          <Button variant="contained"size="small">Log Out</Button>
-        </Link>
-      
+        <Button variant="contained" size="small">
+          Log Out
+        </Button>
+      </Link>
     </Box>
   )
 
   return (
     <div>
-      <MenuIcon sx={{color:"white", paddingRight:2}}fontSize="large" onClick={toggleDrawer(true)} />
+      <MenuIcon
+        sx={{ color: "white", paddingRight: 2 }}
+        fontSize="large"
+        onClick={toggleDrawer(true)}
+      />
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
