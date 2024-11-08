@@ -14,15 +14,19 @@ import { getTopics, postNewArticle, postNewTopic } from "../../../utils/api"
 import { tickle122 } from "../../../context/loggedInUser"
 import Success from "../../Alerts/Success"
 import { Link } from "react-router-dom"
+import Error from "../../Alerts/Error"
 
 function ArticleCreatePage() {
   const [topics, setTopics] = useState([])
+
   const [titleInput, setTitleInput] = useState("")
   const [bodyInput, setBodyInput] = useState("")
   const [selectTopicInput, setSelectTopicInput] = useState("")
   const [articleImageInput, setArticleImageInput] = useState("")
   const [newArticle, setNewArticle] = useState()
-  const [isPostingArticle, setIsPostingArticle] = useState(true)
+  const [isPostingArticle, setIsPostingArticle] = useState(false)
+  const [isLoadingTopics, setIsLoadingTopics] = useState(false)
+  const [isTopicsError, setIsTopicsError] = useState(false)
 
   const [newTopicTitle, setNewTopicTitle] = useState("")
   const [newTopicDescription, setNewTopicDescription] = useState("")
@@ -38,9 +42,16 @@ function ArticleCreatePage() {
   const [articleImageError, setArticleImageError] = useState(false)
 
   useEffect(() => {
-    getTopics().then((topics) => {
-      setTopics(topics)
-    })
+    setIsLoadingTopics(true)
+    setIsTopicsError(false)
+    getTopics()
+      .then((topics) => {
+        setIsLoadingTopics(false)
+        setTopics(topics)
+      })
+      .catch(() => {
+        setIsTopicsError(true)
+      })
   }, [])
 
   const postArticleSubmit = () => {
@@ -161,9 +172,11 @@ function ArticleCreatePage() {
           }}
         />
         <FormControl>
-          <InputLabel id="topic-select-label">Topic</InputLabel>
+          <InputLabel id="topic-select-label">
+            {isLoadingTopics ? "Loading Topics..." : "Topics"}
+          </InputLabel>
           <Select
-            disabled={isPostingArticle}
+            disabled={isPostingArticle | isLoadingTopics}
             labelId="topic-select-label"
             id="topic-select"
             value={selectTopicInput}
@@ -234,31 +247,33 @@ function ArticleCreatePage() {
               : "If left blank a default image will be used"
           }
         />
-        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <Box sx={{ position: "relative" ,width: "100%" }}>
-            <Button
-              style={{ height: 40 ,width: "100%" }}
-              onClick={postArticleSubmit}
-              disabled={isPostingArticle}
-              variant="contained"
-            >
-              {isPostingArticle ? null : "Add Comment"}
-            </Button>
-            {isPostingArticle ? (
-              <CircularProgress
-                size={24}
-                sx={{
-                  color: "white",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  marginTop: "-12px",
-                  marginLeft: "-12px",
-                }}
-              />
-            ) : null}
+        {isTopicsError ? <Error errorMsg={"The has been an error getting current topics. Please try again later"}/> : (
+          <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+            <Box sx={{ position: "relative", width: "100%" }}>
+              <Button
+                style={{ height: 40, width: "100%" }}
+                onClick={postArticleSubmit}
+                disabled={isPostingArticle}
+                variant="contained"
+              >
+                {isPostingArticle ? null : "Add Comment"}
+              </Button>
+              {isPostingArticle ? (
+                <CircularProgress
+                  size={24}
+                  sx={{
+                    color: "white",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    marginTop: "-12px",
+                    marginLeft: "-12px",
+                  }}
+                />
+              ) : null}
+            </Box>
           </Box>
-        </Box>
+        )}
         {newArticle ? (
           <Success>
             <Typography
