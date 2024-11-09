@@ -66,6 +66,10 @@ function postNewTopic(topicBody) {
   })
 }
 
+function deleteArticle(article_id){
+  return api.delete(`/api/articles/${article_id}`)
+}
+
 export {
   getArticles,
   getArticleByID,
@@ -75,5 +79,6 @@ export {
   deleteArticleComment,
   getTopics,
   postNewArticle,
-  postNewTopic 
+  postNewTopic,
+  deleteArticle
 }

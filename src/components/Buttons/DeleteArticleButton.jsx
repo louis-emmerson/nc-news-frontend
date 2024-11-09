@@ -1,19 +1,24 @@
 import { Box, Button, CircularProgress } from "@mui/material"
-import DeleteIcon from '@mui/icons-material/DeleteForever';
+import DeleteIcon from "@mui/icons-material/DeleteForever"
 
-function DeleteCommentButton(props) {
-  const { isLoading, deleteFunction, isDeleteDisabled, buttonTxt="Delete" } = props
+function DeleteArticleButton(props) {
+  const {
+    isLoading,
+    isDeleteDisabled,
+    buttonTxt = "Delete",deleteFunction
+  } = props
+
+  
+
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ position: "relative" }}>
         <Button
-          style={{ height: 40, backgroundColor:"red" }}
-          onClick={() => {
-            deleteFunction()
-          }}
-          disabled={isLoading||isDeleteDisabled}
+          style={{ height: 40, backgroundColor: "red" }}
+          onClick={deleteFunction}
+          disabled={isLoading || isDeleteDisabled}
           variant="contained"
-          startIcon={<DeleteIcon/>}
+          startIcon={<DeleteIcon />}
         >
           {isLoading ? null : buttonTxt}
         </Button>
@@ -35,4 +40,4 @@ function DeleteCommentButton(props) {
   )
 }
 
-export default DeleteCommentButton
+export default DeleteArticleButton

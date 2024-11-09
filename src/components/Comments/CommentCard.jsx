@@ -63,7 +63,7 @@ function CommentCard(props) {
 
       <ListItem style={{display:"flex",justifyContent:"space-between"}}>
       <LikeCounter votes={comment.votes}/>
-      {loggedInUser.username ===comment.author? <DeleteCommentButton isLoading={isDeleting} deleteComment={deleteComment} isDeleteDisabled={isDeleteDisabled}/>:null}
+      {loggedInUser.username ===comment.author? <DeleteCommentButton isLoading={isDeleting} deleteFunction={deleteComment} isDeleteDisabled={isDeleteDisabled}/>:null}
       
       </ListItem>
       {isCommentDeleteError? <Error errorMsg={"There has been an error deleting your comment."}/>:null}

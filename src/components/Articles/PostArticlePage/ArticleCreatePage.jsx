@@ -266,7 +266,7 @@ function ArticleCreatePage() {
                 disabled={isPostingArticle}
                 variant="contained"
               >
-                {isPostingArticle ? null : "Add Comment"}
+                {isPostingArticle ? null : "Post Article"}
               </Button>
               {isPostingArticle ? (
                 <CircularProgress
