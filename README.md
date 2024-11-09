@@ -10,12 +10,14 @@ NC News is a frontend project built with React to display and interact with news
 
 ## Project Features
 
+
 - View a list of articles.
 - Filter articles by topic.
 - Sort & order articles.
 - View a specific article with full details.
 - Upvote and downvote articles.
 - Add new comments and delete your own comments.
+- Add new articles and delete your own.
 
 ## Getting Started
 
@@ -54,6 +56,7 @@ The app supports:
 - **Upvoting and downvoting articles**: Use the buttons on each article to increase or decrease its score.
 - **Adding new comments**: Submit comments on articles you’re reading.
 - **Deleting your own comments**: Remove comments you’ve posted if needed.
+- - **Adding your own Articles**: Add your own article and delete if needed.
 
 ## Backend Repo
 
