@@ -3,8 +3,8 @@ import ArticlesList from "./ArticlesList"
 import ArticlesPageTopBar from "./AtriclesPageTopBar"
 
 function ArticlesPage() {
-  const [sortByInput, setSortByInput] = useState("title")
-  const [orderByInput, setOrderByInput] = useState("ASC")
+  const [sortByInput, setSortByInput] = useState("created_at")
+  const [orderByInput, setOrderByInput] = useState("DESC")
   return (
     <>
       <ArticlesPageTopBar
