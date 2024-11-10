@@ -13,7 +13,8 @@ import Warning from "../Alerts/Warning"
 import { postNewArticleComment } from "../../utils/api"
 import Error from "../Alerts/Error"
 import Success from "../Alerts/Success"
-import { tickle122 } from "../../context/loggedInUser"
+import { AuthContext } from "../../context/auth"
+import InfoAlert from "../Alerts/Info"
 
 function CommentAdder(props) {
   const { articleID, setComments } = props
@@ -22,8 +23,7 @@ function CommentAdder(props) {
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-
-  const user = useContext(tickle122)
+  const { token, setToken } = useContext(AuthContext)
 
   function addNewComment() {
     setIsError(false)
@@ -36,7 +36,7 @@ function CommentAdder(props) {
     } else {
       const newCommentBody = {
         body: newCommentInput,
-        username: user.username,
+        username: token.user.user_metadata.full_name,
       }
 
       postNewArticleComment(articleID, newCommentBody)
@@ -57,65 +57,67 @@ function CommentAdder(props) {
 
   return (
     <>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: "orange" }}>
-            {user.username[0].toUpperCase()}
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={user.username}
-          secondary={
-            <>
-              <TextField
-                onChange={(event) => {
-                  setNewCommentInput(event.target.value)
-                }}
-                style={{ width: "85%" }}
-                label={`Hey ${user.username}, why not add a comment?`}
-                multiline
-                rows={3}
-                variant="filled"
-                value={newCommentInput}
-              />
-              <br />
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Box sx={{ position: "relative" }}>
-                  <Button
-                    style={{ height: 40, width: 150 }}
-                    onClick={() => {
-                      addNewComment()
-                    }}
-                    disabled={isLoading}
-                    variant="contained"
-                  >
-                    {isLoading ? null : "Add Comment"}
-                  </Button>
-                  {isLoading ? (
-                    <CircularProgress
-                      size={24}
-                      sx={{
-                        color: "white",
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        marginTop: "-12px",
-                        marginLeft: "-12px",
+      {!token ? <InfoAlert infoMsg={"Please login to add comments"}/> : (
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: "orange" }}>
+              {token.user.user_metadata.full_name[0].toUpperCase()}
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={token.user.user_metadata.full_name}
+            secondary={
+              <>
+                <TextField
+                  onChange={(event) => {
+                    setNewCommentInput(event.target.value)
+                  }}
+                  style={{ width: "85%" }}
+                  label={`Hey ${token.user.user_metadata.full_name}, why not add a comment?`}
+                  multiline
+                  rows={3}
+                  variant="filled"
+                  value={newCommentInput}
+                />
+                <br />
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Box sx={{ position: "relative" }}>
+                    <Button
+                      style={{ height: 40, width: 150 }}
+                      onClick={() => {
+                        addNewComment()
                       }}
-                    />
-                  ) : null}
+                      disabled={isLoading}
+                      variant="contained"
+                    >
+                      {isLoading ? null : "Add Comment"}
+                    </Button>
+                    {isLoading ? (
+                      <CircularProgress
+                        size={24}
+                        sx={{
+                          color: "white",
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          marginTop: "-12px",
+                          marginLeft: "-12px",
+                        }}
+                      />
+                    ) : null}
+                  </Box>
                 </Box>
-              </Box>
 
-              {isWarning ? (
-                <Warning warningMsg={"A comment must contain some text"} />
-              ) : null}
-              {isError ? <Error /> : null}
-              {isSuccess ? <Success successMsg={"Comment Added"} /> : null}
-            </>
-          }
-        />
-      </ListItem>
+                {isWarning ? (
+                  <Warning warningMsg={"A comment must contain some text"} />
+                ) : null}
+                {isError ? <Error /> : null}
+                {isSuccess ? <Success successMsg={"Comment Added"} /> : null}
+              </>
+            }
+          />
+        </ListItem>
+      )}
     </>
   )
 }
