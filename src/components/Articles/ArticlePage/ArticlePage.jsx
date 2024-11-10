@@ -15,14 +15,16 @@ import Like from "../../Like"
 import Unlike from "../../Unlike "
 import CommentsSection from "../../Comments/CommentsSection"
 import LikeCounter from "../../LikeCounter"
-import { tickle122 } from "../../../context/loggedInUser"
 import DeleteArticleButton from "../../Buttons/DeleteArticleButton"
 import Error from "../../Alerts/Error"
 import Success from "../../Alerts/Success"
+import { AuthContext } from "../../../context/auth"
 
 function ArticlePage() {
   const { articleID } = useParams()
   const navigate = useNavigate()
+
+  const { token } = useContext(AuthContext)
 
   const [article, setArticle] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -30,9 +32,7 @@ function ArticlePage() {
   const [isDeleting, setIsDeleting] = useState(false)
   const [isDeleted, setIsDeleted] = useState(false)
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false)
-  const [deleteArticleError,setDeleteArticleError]=useState(false)
-
-  const loggedInUser = useContext(tickle122)
+  const [deleteArticleError, setDeleteArticleError] = useState(false)
 
   let formattedDate = null
 
@@ -54,21 +54,24 @@ function ArticlePage() {
       })
   }, [])
 
-  function deleteArticleButtonPress (){
+  function deleteArticleButtonPress() {
     setIsDeleting(true)
     setDeleteArticleError(false)
     setIsDeleteDisabled(true)
-    deleteArticle(article.article_id).then(()=>{
-      setIsDeleted(true)
-      setIsDeleteDisabled(false)
-      setIsDeleting(false)
-    }).catch(()=>{
-      setDeleteArticleError(true)
-      setIsDeleteDisabled(false)
-    })
+    deleteArticle(article.article_id)
+      .then(() => {
+        setIsDeleted(true)
+        setIsDeleteDisabled(false)
+        setIsDeleting(false)
+      })
+      .catch(() => {
+        setDeleteArticleError(true)
+        setIsDeleteDisabled(false)
+      })
   }
 
-  if(isDeleted) return <Success successMsg={"Article has been deleted"}></Success>
+  if (isDeleted)
+    return <Success successMsg={"Article has been deleted"}></Success>
 
   return (
     <>
@@ -128,7 +131,9 @@ function ArticlePage() {
                 />
               </Box>
               <Box>
-                {loggedInUser.username === article.author && !deleteArticleError? (
+                
+                {token && token.user.user_metadata.full_name === article.author &&
+                !deleteArticleError ? (
                   <DeleteArticleButton
                     isLoading={isDeleting}
                     isDeleteDisabled={isDeleteDisabled}
@@ -138,7 +143,9 @@ function ArticlePage() {
               </Box>
             </Box>
           )}
-          {deleteArticleError?<Error errorMsg="There has been an error deleting this article. Please try again later"></Error>:null}
+          {deleteArticleError ? (
+            <Error errorMsg="There has been an error deleting this article. Please try again later"></Error>
+          ) : null}
         </CardActions>
         <CommentsSection articleID={articleID} />
       </Card>

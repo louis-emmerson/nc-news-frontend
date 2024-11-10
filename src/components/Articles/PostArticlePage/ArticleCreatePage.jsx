@@ -11,10 +11,10 @@ import {
 } from "@mui/material"
 import { useContext, useEffect, useState } from "react"
 import { getTopics, postNewArticle, postNewTopic } from "../../../utils/api"
-import { tickle122 } from "../../../context/loggedInUser"
 import Success from "../../Alerts/Success"
 import { Link } from "react-router-dom"
 import Error from "../../Alerts/Error"
+import { AuthContext } from "../../../context/auth"
 
 function ArticleCreatePage() {
   const [topics, setTopics] = useState([])
@@ -31,7 +31,7 @@ function ArticleCreatePage() {
   const [newTopicTitle, setNewTopicTitle] = useState("")
   const [newTopicDescription, setNewTopicDescription] = useState("")
 
-  const loggedInUser = useContext(tickle122)
+  const { token } = useContext(AuthContext)
 
   const [titleError, setTitleError] = useState(false)
   const [bodyError, setBodyError] = useState(false)
@@ -110,7 +110,7 @@ function ArticleCreatePage() {
 
     const postArticle = () => {
       const newPost = {
-        author: loggedInUser.username,
+        author: token.user.user_metadata.full_name,
         title: titleInput,
         body: bodyInput,
         article_img_url: articleImageInput,

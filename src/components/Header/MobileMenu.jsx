@@ -25,10 +25,12 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/material"
+import { AuthContext } from "../../context/auth"
 
 function MobileMenu() {
   const [open, setOpen] = React.useState(false)
   const [openMenu, setOpenMenu] = React.useState(false)
+  const { token, setToken } = React.useContext(AuthContext) 
 
   const user = React.useContext(tickle122)
 
@@ -46,22 +48,43 @@ function MobileMenu() {
         <Card variant="outlined">
           <CardContent>
             <Typography variant="h5" component="div">
-              {`Hello, ${user.username}`}
+              {token ? (
+                <>
+                  <Typography>
+                    Hello, {token.user.user_metadata.full_name}
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to={"/create-article"}
+                    onClick={toggleDrawer(false)}
+                    variant="contained"
+                    size="small"
+                  >
+                    Create Article
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    component={Link}
+                    to={"/login"}
+                    onClick={toggleDrawer(false)}
+                    variant="contained"
+                  >
+                    Log In
+                  </Button>
+                  <Button
+                    component={Link}
+                    to={"/sign-up"}
+                    onClick={toggleDrawer(false)}
+                    variant="contained"
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
             </Typography>
           </CardContent>
-          <CardActions>
-            <Button
-              component={Link}
-              to={"/create-article"}
-              onClick={
-                toggleDrawer(false)
-              }
-              variant="contained"
-              size="small"
-            >
-              Create Article
-            </Button>
-          </CardActions>
         </Card>
       </Box>
 
@@ -141,11 +164,13 @@ function MobileMenu() {
           </List>
         </Collapse>
       </List>
-      <Link to={`/articles?topic=${1}`}>
-        <Button variant="contained" size="small">
-          Log Out
-        </Button>
-      </Link>
+      {token ? (
+        <Link to={`/articles?topic=${1}`}>
+          <Button variant="contained" size="small">
+            Log Out
+          </Button>
+        </Link>
+      ) : null}
     </Box>
   )
 

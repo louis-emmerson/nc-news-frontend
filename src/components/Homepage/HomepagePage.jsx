@@ -8,11 +8,12 @@ import {
   useMediaQuery,
 } from "@mui/material"
 import ArticleCard from "../Articles/ArticlesPage/ArticleCard"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getArticles, getTopics } from "../../utils/api"
 import Error from "../Alerts/Error"
 import { Link } from "react-router-dom"
 import { useTheme } from "@mui/material/styles"
+import { AuthContext } from "../../context/auth"
 
 function HomepagePage() {
   const [articles, setArticles] = useState([])
@@ -24,6 +25,8 @@ function HomepagePage() {
   const theme = useTheme()
   const isSmallDevice = useMediaQuery(theme.breakpoints.up("sm"))
   const isMediumDevice = useMediaQuery(theme.breakpoints.up("md"))
+
+  const { token, setToken } = useContext(AuthContext)
 
   useEffect(() => {
     setIsError(false)
@@ -88,6 +91,7 @@ function HomepagePage() {
 
   return (
     <>
+      {token?<Typography> Welcome, {token.user.user_metadata.full_name}</Typography>:null}
       <Box sx={{ width: "100%", position: "relative" }}>
         <img
           src="https://c.pxhere.com/photos/16/f4/news_daily_newspaper_press_newspapers_information_read_newspaper_newsprint-658056.jpg!d"
@@ -127,6 +131,7 @@ function HomepagePage() {
           </Button>
         </Box>
       </Box>
+
 
       <Grid2 container spacing={2} sx={{ paddingTop: 2 }}>
         {articles.map((article, index) => {

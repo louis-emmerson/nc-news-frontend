@@ -11,6 +11,7 @@ import { tickle122 } from "../../context/loggedInUser"
 import { deleteArticleComment } from "../../utils/api"
 import DeleteCommentButton from "../Buttons/DeleteComment"
 import Error from "../Alerts/Error"
+import { AuthContext } from "../../context/auth"
 
 
 
@@ -25,7 +26,6 @@ function CommentCard(props) {
   function deleteComment(){
     setIsDeleting(true)
     deleteArticleComment(comment.comment_id).then(()=>{
-      console.log("Comment Deleted")
       setIsDeleting(false)
       setComments((curentComments)=>{
         return curentComments.filter((currComment)=> comment.comment_id !== currComment.comment_id)
@@ -39,7 +39,7 @@ function CommentCard(props) {
     
   }
  
-  const loggedInUser = useContext(tickle122)
+  const { token, setToken } = useContext(AuthContext)
 
   const dateFormat = new Date(comment.created_at);
   return (
@@ -63,7 +63,7 @@ function CommentCard(props) {
 
       <ListItem style={{display:"flex",justifyContent:"space-between"}}>
       <LikeCounter votes={comment.votes}/>
-      {loggedInUser.username ===comment.author? <DeleteCommentButton isLoading={isDeleting} deleteFunction={deleteComment} isDeleteDisabled={isDeleteDisabled}/>:null}
+      {token.user.user_metadata.full_name === comment.author? <DeleteCommentButton isLoading={isDeleting} deleteFunction={deleteComment} isDeleteDisabled={isDeleteDisabled}/>:null}
       
       </ListItem>
       {isCommentDeleteError? <Error errorMsg={"There has been an error deleting your comment."}/>:null}
