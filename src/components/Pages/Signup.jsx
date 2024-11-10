@@ -21,9 +21,14 @@ export const SignUp = () => {
   const [isSignUpError, setIsSignUpError] = useState(false)
   const [isSuccess,setSuccess] = useState(false)
 
+  
+  const SITE_URL = import.meta.env.VITE_SITE_URL
+  
+
+
   const updateInput = (field, value) => {
-    setFormInput((currentForm) => ({
-      ...currentForm,
+      setFormInput((currentForm) => ({
+          ...currentForm,
       [field]: value,
     }))
   }
@@ -31,7 +36,7 @@ export const SignUp = () => {
   const handleSubmit = (event) => {
     setIsSignUpError(false)
     event.preventDefault()
-    console.log(formInput)
+    
     supabase.auth.signUp(
         {
           email: formInput.email,
@@ -41,8 +46,7 @@ export const SignUp = () => {
               full_name: formInput.fullname,
               username:formInput.username
             },
-            emailRedirectTo:`http://localhost:5173/login`
-          }
+            emailRedirectTo:`${SITE_URL}/login`  }
         }).then((response)=>{
             // console.log(response,"<<<<<RESO")
             setSuccess(true)
@@ -51,8 +55,10 @@ export const SignUp = () => {
             setIsSignUpError(true)
         })}
 
+
         
   return (
+    
     <Box
       width={"100%"}
       height={"80vh"}
