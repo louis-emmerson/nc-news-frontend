@@ -12,6 +12,8 @@ import FootballIcon from "@mui/icons-material/SportsSoccerOutlined"
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Link } from "react-router-dom"
 import { tickle122 } from "../../context/loggedInUser"
+import Error from "../Alerts/Error"
+
 
 import {
   Button,
@@ -26,12 +28,13 @@ import {
   Typography,
 } from "@mui/material"
 import { AuthContext } from "../../context/auth"
+import { supabase } from "../../utils/client"
 
 function MobileMenu() {
   const [open, setOpen] = React.useState(false)
   const [openMenu, setOpenMenu] = React.useState(false)
-  const { token, setToken } = React.useContext(AuthContext) 
-
+  const { token, setToken } = React.useContext(AuthContext)
+  const [isLogoutError, setIsLogoutError] = React.useState(false)
   const user = React.useContext(tickle122)
 
   const toggleDrawer = (newOpen) => () => {
@@ -165,12 +168,24 @@ function MobileMenu() {
         </Collapse>
       </List>
       {token ? (
-        <Link to={`/articles?topic=${1}`}>
-          <Button variant="contained" size="small">
-            Log Out
-          </Button>
-        </Link>
+        <Button
+          onClick={() => {
+            supabase.auth
+              .signOut({ scope: "global" })
+              .then(() => {
+                setToken("")
+              })
+              .catch(() => {
+                setIsLogoutError(true)
+              })
+          }}
+          variant="contained"
+          size="small"
+        >
+          Log Out
+        </Button>
       ) : null}
+      {isLogoutError?<Error errorMsg="Failed to Log Out"></Error>:null}
     </Box>
   )
 
